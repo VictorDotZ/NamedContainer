@@ -24,8 +24,8 @@ public:
 			using pointer = value_type*;
 			using reference = value_type&;
 
-			pointer operator->();
-			reference operator*();
+			pointer operator->() const;
+			reference operator*() const;
 
 			Iterator& operator++();
 			Iterator operator++(int);

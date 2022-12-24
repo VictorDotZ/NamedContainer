@@ -26,6 +26,10 @@ NamedContainer::Container::Container()
 std::string&
 NamedContainer::Container::operator[](const std::string& key)
 {
+	if (!m_dict.contains(key)) {
+		throw std::logic_error(key);
+	}
+
 	return m_dict[key];
 }
 
@@ -48,13 +52,13 @@ NamedContainer::Container::Iterator::Iterator(
 }
 
 NamedContainer::Container::Iterator::pointer
-NamedContainer::Container::Iterator::operator->()
+NamedContainer::Container::Iterator::operator->() const
 {
 	return m_mapIt.operator->();
 }
 
 NamedContainer::Container::Iterator::reference
-NamedContainer::Container::Iterator::operator*()
+NamedContainer::Container::Iterator::operator*() const
 {
 	return m_mapIt.operator*();
 }

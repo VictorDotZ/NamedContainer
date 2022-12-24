@@ -71,3 +71,17 @@ TEST_F(TestNamedContainer, IteratorAllValues)
 	ASSERT_TRUE(values.contains("value2"));
 	ASSERT_TRUE(values.contains("value3"));
 }
+
+TEST_F(TestNamedContainer, NoKey)
+{
+	NamedContainer myC { "field1", "field2" };
+
+	auto c1 = myC.create();
+
+	ASSERT_NE(c1.begin(), c1.end());
+
+	EXPECT_EQ(c1["field1"], "");
+	EXPECT_EQ(c1["field2"], "");
+
+	EXPECT_THROW(c1["FIELD"], std::logic_error);
+}

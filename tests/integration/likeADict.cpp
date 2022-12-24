@@ -26,3 +26,22 @@ TEST(NamedContainerDictIntegration, IterateThrough)
 	ASSERT_EQ(dict["field2"], "value2");
 	ASSERT_EQ(dict["field3"], "value3");
 }
+
+TEST(NamedContainerDictIntegration, IterateNoKey)
+{
+	NamedContainer myC { "field1", "field2", "field3" };
+
+	auto c1 = myC.create();
+
+	EXPECT_EQ(c1["field1"], "");
+	EXPECT_EQ(c1["field2"], "");
+	EXPECT_EQ(c1["field3"], "");
+
+	c1["field1"] = "val1";
+
+	EXPECT_EQ(c1["field1"], "val1");
+	EXPECT_EQ(c1["field2"], "");
+	EXPECT_EQ(c1["field3"], "");
+
+	EXPECT_THROW(c1["FIELD"], std::logic_error);
+}
