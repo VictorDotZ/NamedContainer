@@ -2,6 +2,20 @@
 
 #include <gtest/gtest.h>
 
+TEST(NamedContainerDictIntegration, DefaultUseCase)
+{
+	NamedContainer myC { "field1", "field2", "field3" };
+
+	auto c1 = myC.create();
+
+	c1["field1"] = "abc"; // OK
+	ASSERT_EQ(c1["field1"], "abc");
+	ASSERT_EQ(c1["field2"], "");
+
+	ASSERT_THROW(c1["XXX"] = "cdr", std::logic_error);
+	ASSERT_THROW(c1["XXX"], std::logic_error);
+}
+
 TEST(NamedContainerDictIntegration, IterateThrough)
 {
 	NamedContainer myC { "field1", "field2", "field3" };

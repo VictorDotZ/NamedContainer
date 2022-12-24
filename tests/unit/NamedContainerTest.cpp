@@ -85,3 +85,28 @@ TEST_F(TestNamedContainer, NoKey)
 
 	EXPECT_THROW(c1["FIELD"], std::logic_error);
 }
+
+TEST_F(TestNamedContainer, NonEmptyKeys)
+{
+	NamedContainer myC { "field1", "field2" };
+
+	auto c1 = myC.create();
+
+	ASSERT_NE(c1.begin(), c1.end());
+
+	EXPECT_NO_THROW(c1["field1"]);
+	EXPECT_NO_THROW(c1["field2"]);
+
+	ASSERT_EQ(c1["field1"], "");
+	ASSERT_EQ(c1["field2"], "");
+
+	c1["field1"] = "value1";
+	ASSERT_EQ(c1["field1"], "value1");
+	ASSERT_EQ(c1["field2"], "");
+
+	c1["field1"] = "newValue1";
+	ASSERT_EQ(c1["field1"], "newValue1");
+	ASSERT_EQ(c1["field2"], "");
+
+	EXPECT_THROW(c1["XXX"], std::logic_error);
+}
